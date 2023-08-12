@@ -1,0 +1,10 @@
+.sub_title {
+    position: relative;
+    margin-top: -40px;
+    z-index: 1000;
+}
+
+.sub_title_img > img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease 0s;    
+}

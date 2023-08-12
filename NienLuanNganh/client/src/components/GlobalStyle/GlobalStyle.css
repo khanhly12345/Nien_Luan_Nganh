@@ -1,0 +1,10 @@
+body {
+    font-family: 'Roboto',sans-serif;
+    color: rgb(130, 134, 158);
+    font-size: 15px;
+}
+
+ a {
+    text-decoration: none;
+    color: rgb(130, 134, 158);
+ }
