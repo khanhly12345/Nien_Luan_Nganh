@@ -4,16 +4,16 @@ import clsx from 'clsx'
 
 function Header() {
     return(
-        <div className='header'>
+        <div className={ clsx(style.header) }>
             <div className={style.img_top}>
-                <img style={{ width: '100%' }} src='http://localhost:3000/img/logo/logotop.webp'/>
+                <img style={{ width: '100%' }} src='http://localhost:3000/img/logo/logotop.webp' alt=''/>
             </div>
             <div className="container" style={{ 'padding': 20 }}>
                 <div className='sub_header'>
                     <div className='row'>
                         <div className={clsx(style.logo_catalog,'col-3')}>
                             <div className='d-flex'>
-                                <img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png'/>
+                                <img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png' alt=''/>
                                 <div className={clsx(style.wrap_dmsp)}>
                                     <div>
                                         <i class="fa fa-bars"></i>
@@ -22,9 +22,9 @@ function Header() {
                                 </div>
                             </div>
                             <ul className={clsx(style.drop_menu)}>
-                                <li><a href=''>Sản phẩm Laptop</a></li>
-                                <li><a href=''>Sản phẩm Điện Thoại</a></li>
-                                <li><a href=''>Phụ Kiện </a></li>
+                                <li><a href='#'>Sản phẩm Laptop</a></li>
+                                <li><a href='#'>Sản phẩm Điện Thoại</a></li>
+                                <li><a href='#'>Phụ Kiện </a></li>
                             </ul>
                         </div>
                         <div className='col-5'>
@@ -35,7 +35,7 @@ function Header() {
                         </div>
                         <div className='col-4 d-flex'>
                             <div className={clsx(style.user, 'd-flex')}>
-                                <a href='' className={clsx('d-flex')}>
+                                <a href='#' className={clsx('d-flex')}>
                                     <div className={clsx(style.sub_user)}>
                                         <i class="fa fa-user"></i>
                                     </div>  
@@ -49,7 +49,7 @@ function Header() {
                                 </div>
                             </div>
                             <div className={clsx(style.cart)}>
-                                <a href='' className={clsx('d-flex')}>
+                                <a href='#' className={clsx('d-flex')}>
                                     <div className={clsx(style.sub_user)}>
                                         <i class="fa fa-cart-plus"></i>
                                     </div>  
