@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import style from './header.module.scss'
 import clsx from 'clsx'
 
@@ -6,18 +7,18 @@ function Header() {
     return(
         <div className={ clsx(style.header) }>
             <div className={style.img_top}>
-                <img style={{ width: '100%' }} src='http://localhost:3000/img/logo/logotop.webp' alt=''/>
+                <img style={{ width: '100%' }} src='http://localhost:3000/img/logo/logotop.webp' alt=''/>            
             </div>
             <div className="container" style={{ 'padding': 20 }}>
                 <div className='sub_header'>
                     <div className='row'>
                         <div className={clsx(style.logo_catalog,'col-3')}>
                             <div className='d-flex'>
-                                <img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png' alt=''/>
+                                <Link to='/'><img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png' alt=''/></Link>
                                 <div className={clsx(style.wrap_dmsp)}>
                                     <div>
                                         <i class="fa fa-bars"></i>
-                                        <span style={{ 'padding-left': 5}}>Danh mục sản phẩm </span>
+                                        <span style={{ 'padding-left': 5}} className={clsx(style.catalog)}>Danh mục sản phẩm </span>
                                     </div>
                                 </div>
                             </div>
@@ -49,12 +50,18 @@ function Header() {
                                 </div>
                             </div>
                             <div className={clsx(style.cart)}>
-                                <a href='#' className={clsx('d-flex')}>
+                                {/* <a href='#' className={clsx('d-flex')}>
                                     <div className={clsx(style.sub_user)}>
                                         <i class="fa fa-cart-plus"></i>
                                     </div>  
                                     <div className={clsx(style.user_signin)}>Giỏ hàng của bạn<br></br> <span>(1) sản phấm</span></div>
-                                </a>
+                                </a> */}
+                                <Link to="/cart" className={clsx('d-flex')}>
+                                    <div className={clsx(style.sub_user)}>
+                                        <i class="fa fa-cart-plus"></i>
+                                    </div>  
+                                    <div className={clsx(style.user_signin)}>Giỏ hàng của bạn<br></br> <span>(1) sản phấm</span></div>
+                                </Link>
                             </div>
                         </div>
                     </div>

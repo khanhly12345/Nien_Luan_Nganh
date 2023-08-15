@@ -11,6 +11,11 @@
 }
 
 .img_product:hover {
-    transform: scale(1.01);
+    transform: scale(1.05);
     transition: transform 0.3s ease 0s;    
+    cursor: pointer;
+}
+
+.img_product {
+    padding: 10px;
 }
