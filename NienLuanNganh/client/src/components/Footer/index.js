@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 function Footer() {
     return(
-        <div className="container-fluid" style={{ backgroundColor: 'white', 'margin-top': '20px', height: '300px' }}>
+        <div className="container-fluid" style={{ backgroundColor: 'white', 'margin-top': '20px', height: '300px', borderTop: '2px solid blue' }}>
             <div className='container-fluid'>
                 <div className='row'  style={{ 'padding-top' : '20px' }}>
                     <div className='col-1'>

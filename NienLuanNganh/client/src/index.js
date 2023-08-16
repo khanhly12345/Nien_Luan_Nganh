@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Content from './components/Content';
 import Cart from './components/Cart';
 import Detail from './components/Detail';
+import Login from './components/Login';
+import Register from './components/Register';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +20,8 @@ root.render(
         <Route path='/detail' element={<Detail />}>
           <Route path=':id' element={<Detail />}/>
         </Route>
+        <Route path='/login' element={<Login />}/>
+        <Route path='/register' element={<Register />}/>
       </Route>
     </Routes>
   </BrowserRouter>

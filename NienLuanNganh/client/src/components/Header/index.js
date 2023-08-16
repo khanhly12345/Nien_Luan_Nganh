@@ -36,12 +36,12 @@ function Header() {
                         </div>
                         <div className='col-4 d-flex'>
                             <div className={clsx(style.user, 'd-flex')}>
-                                <a href='#' className={clsx('d-flex')}>
+                                <Link to='/login' className={clsx('d-flex')}>
                                     <div className={clsx(style.sub_user)}>
                                         <i class="fa fa-user"></i>
                                     </div>  
                                     <div className={clsx(style.user_signin)}>Đăng nhập <br></br> Đăng ký</div>
-                                </a>
+                                </Link>
                                 
                             </div>
                             <div className='notification'>

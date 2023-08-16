@@ -1,0 +1,25 @@
+.wrap_cart {
+    height: 100%;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+}
+
+.payment {
+    height: 350px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    width: 30%;
+    left: 20px;
+}
+
+.button_buy {
+    background-color: blue;
+    padding: 5px 20px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    border-radius: 5px;
+}
