@@ -1,0 +1,19 @@
+.nav {
+    width: 280px;
+    background-color: rgb(28, 37, 54);
+    height: 750px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.navigation li{
+    list-style-type: none;
+    padding: 10px;
+    font-weight: 600;
+}
+
+
+.navigation li i {
+    padding: 10px;
+}

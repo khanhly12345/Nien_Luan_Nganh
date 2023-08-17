@@ -4,26 +4,29 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Content from './components/Content';
-import Cart from './components/Cart';
-import Detail from './components/Detail';
-import Login from './components/Login';
-import Register from './components/Register';
+// import Content from './components/Content';
+// import Cart from './components/Cart';
+// import Detail from './components/Detail';
+// import Login from './components/Login';
+// import Register from './components/Register';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // <BrowserRouter>
+  //   <Routes>
+  //     <Route path='/' element={<App />}>
+  //       <Route path='/' element={<Content />}/>
+  //       <Route path='/cart' element={<Cart />}/>
+  //       <Route path='/detail' element={<Detail />}>
+  //         <Route path=':id' element={<Detail />}/>
+  //       </Route>
+  //       <Route path='/login' element={<Login />}/>
+  //       <Route path='/register' element={<Register />}/>
+  //     </Route>
+  //   </Routes>
+  // </BrowserRouter>
   <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<App />}>
-        <Route path='/' element={<Content />}/>
-        <Route path='/cart' element={<Cart />}/>
-        <Route path='/detail' element={<Detail />}>
-          <Route path=':id' element={<Detail />}/>
-        </Route>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/>
-      </Route>
-    </Routes>
+      <App />
   </BrowserRouter>
   
 );
