@@ -15,6 +15,7 @@ function Nav() {
                     <li><a><i class="fa fa-chart-line"></i>Overview </a></li>
                     <li><a><i class="fa fa-users"></i>Customer </a></li>
                     <li><a><i class="fa fa-laptop"></i>Products </a></li>
+                    <li><a><i class="fa fa-cart-plus"></i>Orders </a></li>
                     <li><a><i class="fa fa-user"></i>Account </a></li>
                     <li><a><i class="fa fa-wrench"></i>Setting </a></li>
                     <li><a><i class="fa fa-lock"></i>Login </a></li>

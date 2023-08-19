@@ -31,6 +31,9 @@ import Register from './components/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Admin from './components/Admin';
+import ProductAdmin from './components/Admin/ProductAdmin';
+import AddProduct from './components/Admin/ProductAdmin/AddProduct';
+
 function App() {
   return (
     <>
@@ -46,7 +49,10 @@ function App() {
         </Route>
       </Routes>
       <Routes >
-        <Route path='/admin' element={<Admin />} />
+        <Route path='/admin' element={<Admin />} >
+          <Route path='product' element={<ProductAdmin />} />
+          <Route path='addProduct' element={<AddProduct />} />
+        </Route>
       </Routes>
     </>
   );
