@@ -38,6 +38,7 @@ function AddProduct() {
                 }}
                 ref={selectRef}
             >
+                <option value='0'>Chọn Danh Mục</option>
                 {categories.map((category, index) => (
                     <option 
                         className={category._id}
