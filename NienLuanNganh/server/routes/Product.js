@@ -8,5 +8,12 @@ router.post('/create', multer.single('img'), ProductController.create)
 router.post('/create2', multer.single('img'), ProductController.create2)
 // show all products
 router.get('/show', ProductController.show)
+// show edit product
+router.get('/show/:id', ProductController.showEdit)
+// edit product
+router.post('/edit/:id', multer.single('imgNew'), ProductController.edit)
+// delete product
+
+router.post('/delete', ProductController.delete)
 
 module.exports = router;

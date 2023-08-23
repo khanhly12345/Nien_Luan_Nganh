@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { HandlePrice } from '../../../handlePrice';
+
 function ProductAdmin() {
 
     const [products, setPrducts] = useState([])
+
 
     useEffect(() => {
         axios.get('/api/products/show')
@@ -14,7 +16,19 @@ function ProductAdmin() {
                 setPrducts(res.data)
             })
     },[])
-    console.log(products)
+
+    const handleDelete = (id, img) => {
+        axios.post('/api/products/delete', {
+            id,
+            img
+        })
+        .then((res) => {
+
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
     return (
         <div className={clsx(style.productadmin)}>
             <div className='d-flex' style={{ 'justify-content': 'space-between', padding: '10px' }}>
@@ -27,7 +41,7 @@ function ProductAdmin() {
                 </div>
             </div>
             <div>
-                <Link  className='btn btn-primary' style={{ marginLeft: '10px' }}>Add Product</Link>
+                <Link to='/admin/addProduct' className='btn btn-primary' style={{ marginLeft: '10px' }}>Add Product</Link>
             </div>
             <div style={{ padding: '10px' }}>
                 <table class="table">
@@ -51,7 +65,7 @@ function ProductAdmin() {
                                 <td>{product.branch}</td>
                                 <td>{HandlePrice(product.price)}</td>
                                 <td>{product.quantity}</td>
-                                <td><Link class="btn btn-success">Edit</Link> <a  class="btn btn-danger">Delete</a></td>
+                                <td><Link to={'/admin/editProduct/' + product._id} class="btn btn-success">Edit</Link> <button  class="btn btn-danger" onClick={() => {handleDelete(product._id, product.img)}}>Delete</button></td>
                             </tr>
                         ))}
                     </tbody>

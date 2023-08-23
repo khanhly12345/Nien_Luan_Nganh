@@ -4,6 +4,7 @@ const app = express()
 const db = require('./config/db')
 const route = require('./routes')
 const bodyParser = require('body-parser');
+const path = require('path');
 app.use(cors())
 // connect db
 db.connect()
@@ -16,5 +17,7 @@ app.get('/home', function (req, res) {
 })
 // router
 route(app);
+
+console.log(path.join(__dirname, 'uploads'))
   
 app.listen(3001)
