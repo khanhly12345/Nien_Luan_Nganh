@@ -28,7 +28,7 @@ function AddProduct() {
     },[])
     console.log(value)
     return (
-        <div className='productadmin' style={{ padding: '10px' }}>
+        <div className='productadmin' style={{ padding: '10px'}}>
             <h1>Add Product</h1>
 
             <select 

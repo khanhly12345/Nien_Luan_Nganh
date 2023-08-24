@@ -3,7 +3,8 @@ import "react-multi-carousel/lib/styles.css";
 import style from './slideproduct.module.scss'
 import Product from './Product';
 import clsx from 'clsx'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const responsive = {
     superLargeDesktop: {
@@ -25,11 +26,31 @@ const responsive = {
     }
 };
 
+const product = {
+    name: 'laptop',
+    img: '1692796326562-laptop5.webp',
+    branch: 'hp',
+    price: '200000'
+}
+
 function SlideProduct() {
     const [value, setValue] = useState('laptop');
+    const [products, setProducts] = useState([])
+    
     const handleCheck = (product) => {
         setValue(product)
     }
+
+    useEffect(() => {
+        axios.get(`/api/products/showCategory/${value}`)
+            .then(res => {
+                setProducts(res.data)
+            })
+            .catch(error => {
+                console.log(Error)
+            })
+    }, [value])
+
     return(
         <div className='container' style={{ 'margin-top': '20px'}}>
             <div className={clsx(style.wrap_slidepProduct)}>
@@ -37,8 +58,8 @@ function SlideProduct() {
                 <div className={clsx(style.nav_slidepProduct)}>
                     <div className='row'>
                         <div className='col-4' style={{ 'padding-right': 0}}>
-                            <div className={clsx(style.title)} style={value === 'dienthoai'? { background: 'transparent', color: 'white'} : {}}  onClick={() => {handleCheck('dienthoai')}}>
-                                Laptop Giảm Giá
+                            <div className={clsx(style.title)} style={value === 'phone'? { background: 'transparent', color: 'white'} : {}}  onClick={() => {handleCheck('phone')}}>
+                                Điện Thoại Giảm Giá
                             </div>
                         </div>
                         <div className='col-4' style={{ 'padding': 0}}>
@@ -48,7 +69,7 @@ function SlideProduct() {
                         </div>
                         <div className='col-4' style={{ 'padding-left': 0}}>
                             <div className={clsx(style.title)} style={value === 'phukien'? { background: 'transparent', color: 'white'} : {}} onClick={() => {handleCheck('phukien')}}>
-                                Laptop Giảm Giá
+                                Phụ Kiện Giảm Giá
                             </div>
                         </div>
                     </div>
@@ -64,14 +85,16 @@ function SlideProduct() {
                     <Product /> */}
                 <div style={{ 'margin-top' : '20px', width: '1020px', float: 'right', 'margin-right' : '20px' }}>
                     <Carousel responsive={responsive}>
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
+                        {products.map(product => (
+                            <Product value={product}/>
+                        ))}
+                        <Product value={product}/>
+                        <Product value={product}/>
+                        <Product value={product}/>
+                        <Product value={product}/>
+                        <Product value={product}/>
+                        <Product value={product}/>
+                        <Product value={product}/>
                     </Carousel>;
                 </div>
                     

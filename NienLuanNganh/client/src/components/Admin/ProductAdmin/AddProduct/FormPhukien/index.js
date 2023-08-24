@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
-
+import { useNavigate } from "react-router-dom";
 
 function FormPhukien({ id }) {
     const [name, setName] = useState('')
@@ -15,6 +15,8 @@ function FormPhukien({ id }) {
     const [dophangiai, setDophangiai] = useState('')
     const [tencambien, setTencambien] = useState('')
     const [quantity, setQuantity] = useState('');
+    const navigate = useNavigate()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -38,7 +40,9 @@ function FormPhukien({ id }) {
                   'Content-Type': 'multipart/form-data'
                 }
             }) 
-            console.log("product created: ", response.data)
+            if(response.data.message) {
+                navigate('/admin/product')
+            }
 
         }catch(error) {
             console.error('Error creating product:', error);

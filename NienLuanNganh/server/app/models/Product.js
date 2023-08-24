@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const Product = new Schema({
     name: String,
     branch: String,
@@ -9,8 +8,8 @@ const Product = new Schema({
     price: String,
     quantity: String,
     category:{
-        type: String,
-        ref: 'categories'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Categories'
     },
     attributes: {
         theheCPU: String,

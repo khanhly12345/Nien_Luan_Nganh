@@ -5,6 +5,8 @@ import SubDetail from './SubDetailProduct';
 import Product from '../Content/SlideProduct/Product';
 import Carousel from "react-multi-carousel";
 import PhuKienDetail from './PhuKienDetail';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const responsive = {
     superLargeDesktop: {
@@ -26,8 +28,29 @@ const responsive = {
     }
 };
 
+
 function Detail () {
-    let value = 'phukien'
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        axios.get('/api/products/show')
+            .then(res => {
+                setProducts(res.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+    useEffect(() => {
+        axios.get('/api/products/detail')
+            .then(res => {
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
     return (
         <>
         <div className='container'>
@@ -96,14 +119,19 @@ function Detail () {
                 <h4 style={{ color: 'black' }}>Sản Phẩm Liên Quan</h4>
                 <div style={{ marginTop: '30px' }}>
                     <Carousel responsive={responsive}>
+                        {products.map((product) => (
+                            <div className={clsx(style.col_product, 'col-2')}>
+                                <Product value={product} />
+                            </div>
+                        ))}
+                        {/* <Product />
                         <Product />
                         <Product />
                         <Product />
                         <Product />
                         <Product />
                         <Product />
-                        <Product />
-                        <Product />
+                        <Product /> */}
                     </Carousel>;
                 </div>
             </div>

@@ -1,7 +1,9 @@
+const { match } = require('assert');
 const Products = require('../models/Product')
 const fs = require('fs');
 
 class Product {
+    // create phu kien
     create (req, res) {
         const { 
             name,
@@ -38,9 +40,9 @@ class Product {
         // const imagePath = req.file;
         // console.log(req.file.filename)
         // console.log(req.body)
-        res.json({ message: 'Product created successfully' });
+        res.json({ message: true });
     }
-
+    // create laptop
     create2(req, res) {
         const {
             name,
@@ -73,7 +75,7 @@ class Product {
             }
         })
         product.save()
-        res.json({ message: 'Product created successfully' });
+        res.json({ message: true });
     }
 
     show(req, res) {
@@ -148,6 +150,23 @@ class Product {
             res.json({message: false})
         }
     }
+
+    async showLaptop(req, res) {
+        const id = req.params.category
+        console.log(id)
+        const products = await Products.find()
+            .populate({path: 'category', match: {name: `${id}`}}) // 'author' ở đây là tên trường chứa tham chiếu
+            .exec();
+         const filterProduct = products.filter(product => (
+            product.category !== null
+         ))
+         res.json(filterProduct)
+    }
+
+    // detail
+    detail(req, res) {
+        
+    }
 }
 
-module.exports = new Product();
+module.exports = new Product(); 

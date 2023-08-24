@@ -13,7 +13,10 @@ router.get('/show/:id', ProductController.showEdit)
 // edit product
 router.post('/edit/:id', multer.single('imgNew'), ProductController.edit)
 // delete product
-
 router.post('/delete', ProductController.delete)
+// api show laptop
+router.get('/showCategory/:category', ProductController.showLaptop)
+// api detail product
+router.get('/detail/:id', ProductController.detail)
 
 module.exports = router;
