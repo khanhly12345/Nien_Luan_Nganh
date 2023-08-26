@@ -18,5 +18,7 @@ router.post('/delete', ProductController.delete)
 router.get('/showCategory/:category', ProductController.showLaptop)
 // api detail product
 router.get('/detail/:id', ProductController.detail)
+// api cart product
+router.post('/carts', ProductController.carts)
 
 module.exports = router;

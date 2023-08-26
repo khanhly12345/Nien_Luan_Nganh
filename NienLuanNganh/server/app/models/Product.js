@@ -15,7 +15,7 @@ const Product = new Schema({
         theheCPU: String,
         CPU: String,
         chip: String,
-        ram: Array,
+        ram: String,
         hdh: String,
         manhinh: String,
         nsx: String,

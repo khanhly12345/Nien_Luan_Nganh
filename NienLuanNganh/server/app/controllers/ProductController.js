@@ -1,6 +1,7 @@
 const { match } = require('assert');
 const Products = require('../models/Product')
 const fs = require('fs');
+const { error } = require('console');
 
 class Product {
     // create phu kien
@@ -164,8 +165,24 @@ class Product {
     }
 
     // detail
-    detail(req, res) {
+    async detail(req, res) {
+        console.log(req.params.id)
+        const products = await Products.findOne({ _id: req.params.id})
+            .populate('category')
+            .exec()
+        res.json(products)
+    }
+    // carts
+    carts (req, res) {
+        const idCart = req.body
+        const findRecords = () => {
+            return Products.find({ _id: { $in: idCart }}).exec();
+        };
         
+        findRecords()
+            .then(records => {
+                res.json(records)
+            })  
     }
 }
 

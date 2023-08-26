@@ -12,8 +12,8 @@ function FormLaptop({ id }) {
     const [hdh, setHdh] = useState('')
     const [manhinh, setManhinh] = useState('')
     const [nsx, setNsx] = useState('')
-    const [ram, setRam] = useState([])
-    const [newRam, setNewRam] = useState('');
+    const [ram, setRam] = useState('')
+    // const [newRam, setNewRam] = useState('');
     const [quantity, setQuantity] = useState('');
 
     const navigate = useNavigate()
@@ -50,17 +50,17 @@ function FormLaptop({ id }) {
         }
     }
 
-    const handleAdd = () => {
-        setRam([...ram, newRam])
-        // setRam('')
-        setNewRam('')
-    }
+    // const handleAdd = () => {
+    //     setRam([...ram, newRam])
+    //     // setRam('')
+    //     setNewRam('')
+    // }
 
-    const handleChange = (val) => {
-        setNewRam(val)
-    }
+    // const handleChange = (val) => {
+    //     setNewRam(val)
+    // }
 
-    console.log(ram)
+    // console.log(ram)
 
     return (
         
@@ -113,11 +113,11 @@ function FormLaptop({ id }) {
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Ram</label>
                     <div style={{ display: 'flex' }}>
-                        <input type="text" class="form-control" id="exampleInputPassword1" name='ram' value={newRam} onChange={(e) => {handleChange(e.target.value)}}/><div className='btn btn-primary' onClick={handleAdd}>Add</div>
+                        <input type="text" class="form-control" id="exampleInputPassword1" name='ram' value={ram} onChange={(e) => {setRam(e.target.value)}}/>
                     </div>
-                    {ram.map((val, index) => (
+                    {/* {ram.map((val, index) => (
                         <li key={index}>{val}</li>
-                    ))}
+                    ))} */}
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

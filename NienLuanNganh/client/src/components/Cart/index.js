@@ -1,7 +1,44 @@
+import { useState, useEffect } from 'react';
 import style from './cart.module.scss'
 import clsx from 'clsx'
+import axios from 'axios';
+import { HandlePrice } from '../../handlePrice';
 
 function Cart() {
+    const storedCartItems = JSON.parse(localStorage.getItem('id')) || [];
+    const [carts, setCarts] = useState([])
+    const [quantities, setQuantities] = useState([])
+    useEffect(() => {
+        axios.post('/api/products/carts', storedCartItems)
+            .then((res) => {
+                setCarts(res.data);
+                setQuantities(new Array(res.data.length).fill(1));
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+    // const minuteQuantity = () => {
+
+    // }
+
+    const inCreaseQuantity = (index) => {
+        const newQuantities = [...quantities]
+        newQuantities[index] = newQuantities[index]  + 1
+        setQuantities(newQuantities)
+    }
+
+    const deCreaseQuantity = (index) => {
+        const newQuantities = [...quantities]
+        if(newQuantities[index] > 1) {
+             newQuantities[index] = newQuantities[index]  - 1
+            setQuantities(newQuantities)
+        }
+    }
+
+    console.log([...quantities])
+    let total = 0
     return (
         <div className="container" style={{ marginTop: '50px' }}>
             <div className='row'>
@@ -20,64 +57,55 @@ function Cart() {
                             <span style={{ color: 'black' }}>Thành tiền</span>
                         </div>
                     </div>
-                    <div className='row' style={{ padding: '10px 5px', textAlign: 'center'}}>
-                        <div className='col-6'>
-                            <div className='row'>
-                                <div className='col-4'>
-                                    <img src='http://localhost:3000/img/product/product1.webp' style={{ width: '100%'}} />
+                    {carts.map((cart, index) => (
+                        <div className='row' style={{ padding: '10px 5px', textAlign: 'center'}}>
+                            <div className='col-6'>
+                                <div className='row'>
+                                    <div className='col-4'>
+                                        <img src={'/' + cart.img} style={{ width: '100%'}} />
+                                    </div>
+                                    <div className='col-8' style={{ paddingTop: '15px'  }}>
+                                        <span>{cart.name}</span>< br></br><br></br>
+                                        <span>{cart.attributes && cart.attributes.ram}</span>
+                                    </div>
                                 </div>
-                                <div className='col-8' style={{ paddingTop: '15px'  }}>
-                                    <span>Máy tính xách tay/ Laptop HP Pavilion 14-dv2074TU (7C0P3PA) (i5-1235U) (Vàng)</span>
+                            </div>
+                            <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(cart.price)}</span>
+                                <div style={{ 'text-decoration': 'line-through' }}>{HandlePrice(parseInt(cart.price) - parseInt(cart.price) * 0.1)}</div>
+                            </div>
+                            <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                    <div style={{ display: 'flex', 'justify-content': 'space-around', backgroundColor: 'rgb(211 214 227)', height: '40px', borderRadius: '5px'}}>
+                                        <button 
+                                            style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
+                                            onClick={() => {
+                                                deCreaseQuantity(index)
+                                            }}
+                                        >-</button>
+
+                                        <div 
+                                            className='quantity'
+                                            style={{ paddingTop: '10px', color: 'black' }}
+                                            // value={quantities}
+                                            key={index}
+                                        >{quantities[index]}</div>
+
+                                        <button 
+                                            style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
+                                            onClick={() => {
+                                                inCreaseQuantity(index)
+                                            }}
+                                        >+</button>
+                                    </div>
+                            </div>
+                            <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(parseInt(cart.price * quantities[index]))}</span>
+                                <div style={{ paddingTop: '10px' }}>
+                                    <a href=''>Xóa</a>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                            <span style={{ color: 'black', fontWeight: '600' }}>15.990.000đ</span>
-                            <div style={{ 'text-decoration': 'line-through' }}>18.990.000đ</div>
-                        </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                                <div style={{ display: 'flex', 'justify-content': 'space-around', backgroundColor: 'rgb(211 214 227)', height: '40px', borderRadius: '5px'}}>
-                                    <button style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}>-</button>
-                                    <div style={{ paddingTop: '10px', color: 'black' }}>3</div>
-                                    <button style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}>+</button>
-                                </div>
-                        </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                            <span style={{ color: 'black', fontWeight: '600' }}>15.990.000đ</span>
-                            <div style={{ paddingTop: '10px' }}>
-                                <a href=''>Xóa</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='row' style={{ padding: '10px 5px', textAlign: 'center'}}>
-                        <div className='col-6'>
-                            <div className='row'>
-                                <div className='col-4'>
-                                    <img src='http://localhost:3000/img/product/product1.webp' style={{ width: '100%'}} />
-                                </div>
-                                <div className='col-8' style={{ paddingTop: '15px'  }}>
-                                    <span>Máy tính xách tay/ Laptop HP Pavilion 14-dv2074TU (7C0P3PA) (i5-1235U) (Vàng)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                            <span style={{ color: 'black', fontWeight: '600' }}>15.990.000đ</span>
-                            <div style={{ 'text-decoration': 'line-through' }}>18.990.000đ</div>
-                        </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                                <div style={{ display: 'flex', 'justify-content': 'space-around', backgroundColor: 'rgb(211 214 227)', height: '40px', borderRadius: '5px'}}>
-                                    <button style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}>-</button>
-                                    <div style={{ paddingTop: '10px', color: 'black' }}>3</div>
-                                    <button style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}>+</button>
-                                </div>
-                        </div>
-                        <div className='col-2' style={{ paddingTop: '15px'  }}>
-                            <span style={{ color: 'black', fontWeight: '600' }}>15.990.000đ</span>
-                            <div style={{ paddingTop: '10px' }}>
-                                <a href=''>Xóa</a>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                     <div className='row'>
                         <div className='col-12' style={{ backgroundColor: 'rgb(243, 243, 247)', padding: '20px 20px', borderRadius: '5px' }}>
                             <div style={{ display: 'flex', marginTop: '5px' }}>

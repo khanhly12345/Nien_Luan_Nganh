@@ -3,7 +3,7 @@ import style from  './product.module.scss'
 import clsx from 'clsx' 
 import { HandlePrice } from '../../../../handlePrice';
 function Product({value}) {
-    console.log(value.name)
+
     return(
 
             <div className={clsx(style.wrap_product)}>

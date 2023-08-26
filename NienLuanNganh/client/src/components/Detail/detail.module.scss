@@ -48,3 +48,20 @@
     border-radius: 10px;
     padding: 10px;
 }
+
+.ram {
+    margin-top: 10px;
+}
+
+.ram button {
+    padding: 0.5rem 1rem;
+    margin-left: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    background: white;
+    border-radius: 5px;
+}
+
+.active {
+    color: rgb(20, 53, 195);
+    border-color: rgb(20, 53, 195) !important;
+}
