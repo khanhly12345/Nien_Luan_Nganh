@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import style from './cart.module.scss'
 import clsx from 'clsx'
 import axios from 'axios';
@@ -29,16 +29,33 @@ function Cart() {
         setQuantities(newQuantities)
     }
 
-    const deCreaseQuantity = (index) => {
+    // const deCreaseQuantity = (index) => {
+    //     const newQuantities = [...quantities]
+    //     if(newQuantities[index] > 1) {
+    //          newQuantities[index] = newQuantities[index]  - 1
+    //         setQuantities(newQuantities)
+    //     }
+    // }
+
+    const deCreaseQuantity = useCallback((index) => {
         const newQuantities = [...quantities]
         if(newQuantities[index] > 1) {
              newQuantities[index] = newQuantities[index]  - 1
             setQuantities(newQuantities)
         }
-    }
+    }, [quantities])
 
-    console.log([...quantities])
-    let total = 0
+    let totalPrice;
+    const arrayPrice = carts.map(cart => parseInt(cart.price));   
+    totalPrice =  arrayPrice.reduce((initPirce, currentPirce, index) => (
+        initPirce + currentPirce * quantities[index]
+    ), 0);
+
+
+    console.log('re-render')
+
+    console.log(totalPrice)
+
     return (
         <div className="container" style={{ marginTop: '50px' }}>
             <div className='row'>
@@ -152,7 +169,7 @@ function Cart() {
                             </div>
                         </div>
                         <div style={{ display: 'flex', 'justify-content': 'space-between', paddingTop: '10px' }}>
-                            <span style={{ color: 'black' }}>Thành Tiền</span><span style={{ color: 'red' , fontWeight: '600' }}>15.990.000đ</span>
+                            <span style={{ color: 'black' }}>Thành Tiền</span><span style={{ color: 'red' , fontWeight: '600' }}>{HandlePrice(totalPrice)}</span>
                         </div>
                         <div className={clsx(style.button_buy)} style={{ marginTop: '10px' }}>
                                     <div>Mua Ngay</div>
