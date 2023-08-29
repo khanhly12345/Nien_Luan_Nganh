@@ -1,9 +1,26 @@
 import { Link } from 'react-router-dom';
 import style from './header.module.scss'
 import clsx from 'clsx'
-
+import { useEffect, useState } from 'react';
+import jwtDecode from 'jwt-decode';
 
 function Header() {
+    const [storeToken, setStoreToken] = useState('')
+    let getToken
+    useEffect(() => {
+        getToken = localStorage.getItem('token')
+        if(getToken) {
+            const jwtToken = getToken;
+            const decodedToken = jwtDecode(jwtToken);
+            setStoreToken(decodedToken)
+        }
+    }, [])
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        window.location.href = '/'
+    }
+
     return(
         <div className={ clsx(style.header) }>
             <div className={style.img_top}>
@@ -36,12 +53,29 @@ function Header() {
                         </div>
                         <div className='col-4 d-flex'>
                             <div className={clsx(style.user, 'd-flex')}>
-                                <Link to='/login' className={clsx('d-flex')}>
-                                    <div className={clsx(style.sub_user)}>
-                                        <i class="fa fa-user"></i>
-                                    </div>  
-                                    <div className={clsx(style.user_signin)}>Đăng nhập <br></br> Đăng ký</div>
-                                </Link>
+                                {storeToken ?
+                                <div style={{ display: 'flex', position: 'relative' }} className={clsx(style.wrap_infor)}>
+                                    <div style={{ display: 'flex', width: '100%'}}>
+                                        <img src='http://localhost:3000/img/logo/avatar.jpg' style={{ width: '50px', borderRadius: '50px'}} />
+                                        <div style={{ paddingLeft: '5px' }}>Xin chào, <br></br><span style={{ color: 'red', fontWeight: 550, paddingTop: '10px' }}>{storeToken.username}</span></div>
+                                    </div>
+                                    <div className={clsx(style.infor)}>
+                                        <div className={clsx(style.sub_infor)}>
+                                            <button style={{ width: '100%' }} className='btn btn-primary' onClick={handleLogout}>Đăng Xuất</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    
+                                    :
+                                    <Link to='/login' className={clsx('d-flex')}>
+                                        <div className={clsx(style.sub_user)}>
+                                            <i class="fa fa-user"></i>
+                                        </div>  
+                                        <div className={clsx(style.user_signin)}>Đăng nhập <br></br> Đăng ký</div>
+                                    </Link>                             
+                                }
+                                
                                 
                             </div>
                             <div className='notification'>

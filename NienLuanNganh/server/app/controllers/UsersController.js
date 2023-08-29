@@ -1,5 +1,6 @@
 const User = require('../models/Users')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 class Users {
     async create(req, res) {
@@ -27,8 +28,18 @@ class Users {
         }
     }
 
-    checkLogin(req, res) {
-        console.log(req.body)
+    async checkLogin(req, res) {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username})
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        const secretKey = 'khanhlydeptrai'
+
+        if(passwordMatch) {
+            let token = jwt.sign({userId: user._id, username: user.username}, secretKey, {expiresIn: '1h'} )
+            res.json({token})
+        }else{
+            res.json({message: 'Mật khẩu và tài khoản không chính xác!'})
+        }
     } 
 }
 

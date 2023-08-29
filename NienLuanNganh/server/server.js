@@ -5,6 +5,7 @@ const db = require('./config/db')
 const route = require('./routes')
 const bodyParser = require('body-parser');
 const path = require('path');
+
 app.use(cors())
 // connect db
 db.connect()

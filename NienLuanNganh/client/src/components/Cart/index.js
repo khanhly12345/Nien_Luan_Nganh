@@ -52,9 +52,14 @@ function Cart() {
     ), 0);
 
 
-    console.log('re-render')
+    const handleBuy = () => {
+        let getToken = localStorage.getItem('token')
+        if(!getToken){
+            window.location.href = '/login'
+        }
+    }
+        
 
-    console.log(totalPrice)
 
     return (
         <div className="container" style={{ marginTop: '50px' }}>
@@ -171,7 +176,7 @@ function Cart() {
                         <div style={{ display: 'flex', 'justify-content': 'space-between', paddingTop: '10px' }}>
                             <span style={{ color: 'black' }}>Thành Tiền</span><span style={{ color: 'red' , fontWeight: '600' }}>{HandlePrice(totalPrice)}</span>
                         </div>
-                        <div className={clsx(style.button_buy)} style={{ marginTop: '10px' }}>
+                        <div className={clsx(style.button_buy)} style={{ marginTop: '10px', cursor: 'pointer' }} onClick={handleBuy}>
                                     <div>Mua Ngay</div>
                                     <div style={{ fontSize: '12px' }}>Bạn cần đăng nhập để tiếp tục</div>
                         </div>
