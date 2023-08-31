@@ -34,7 +34,8 @@ import Admin from './components/Admin';
 import ProductAdmin from './components/Admin/ProductAdmin';
 import AddProduct from './components/Admin/ProductAdmin/AddProduct';
 import EditProduct from './components/Admin/ProductAdmin/EditProduct';
-
+import Order from './components/Admin/Order';
+import DetailOrder from './components/Admin/Order/DetailOrder';
 function App() {
   return (
     <>
@@ -51,9 +52,11 @@ function App() {
       </Routes>
       <Routes >
         <Route path='/admin' element={<Admin />} >
-          <Route path='product' element={<ProductAdmin />} />
+          <Route path='' element={<ProductAdmin />} />
           <Route path='addProduct' element={<AddProduct />} />
           <Route path='editProduct/:id' element={<EditProduct />} />
+          <Route path='order' element={<Order />}/>
+          <Route path='detailOrder/:id' element={<DetailOrder />}/>
         </Route>
       </Routes>
     </>

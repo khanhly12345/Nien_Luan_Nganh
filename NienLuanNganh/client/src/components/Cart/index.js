@@ -56,6 +56,19 @@ function Cart() {
         let getToken = localStorage.getItem('token')
         if(!getToken){
             window.location.href = '/login'
+        }else{
+            axios.post('/api/order/create', {   
+                getToken,
+                carts,
+                quantities,
+                totalPrice
+            })
+            .then(res => {
+                console.log(res.data.message)
+            })
+            .catch(errr => {
+                console.log(errr)
+            })
         }
     }
         
