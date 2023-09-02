@@ -36,6 +36,7 @@ import AddProduct from './components/Admin/ProductAdmin/AddProduct';
 import EditProduct from './components/Admin/ProductAdmin/EditProduct';
 import Order from './components/Admin/Order';
 import DetailOrder from './components/Admin/Order/DetailOrder';
+import Filter from './components/Filter';
 function App() {
   return (
     <>
@@ -48,6 +49,7 @@ function App() {
           </Route>
           <Route path='/login' element={<Login />}/>
           <Route path='/register' element={<Register />}/>
+          <Route path='/filter/:id' element={<Filter />}/>
         </Route>
       </Routes>
       <Routes >

@@ -184,6 +184,28 @@ class Product {
                 res.json(records)
             })  
     }
+
+    async paginate (req, res) {
+        const { page, limit } = req.query;
+        console.log(page, limit)
+        const currentPage = parseInt(page) + 1 || 0;
+        const itemsPerPage = parseInt(limit) || 5;
+
+        try {
+            const items = await Products.find()
+            .skip((currentPage - 1) * itemsPerPage)
+            .limit(itemsPerPage);
+            res.json(items);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Lỗi khi truy vấn dữ liệu.' });
+        }
+    }   
+
+    async countProduct (req, res) {
+        const count = await Products.count({})
+        res.json({count})
+    }
 }
 
 module.exports = new Product(); 

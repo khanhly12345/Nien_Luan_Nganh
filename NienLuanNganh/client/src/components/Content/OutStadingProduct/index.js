@@ -3,21 +3,22 @@ import clsx from 'clsx'
 import Product from '../SlideProduct/Product'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import PaginatedItems from '../PaginatedItems';
 
 function OutStadingProduct() {
     const [products, setProducts] = useState([])
 
-    useEffect(() => {
-        axios.get('/api/products/show')
-            .then(res => {
-                setProducts(res.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get('/api/products/show')
+    //         .then(res => {
+    //             setProducts(res.data)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
+    // }, [])
 
-    console.log(products)
+    // console.log(products)
     return(
         <div className="container" style={{ 'margin-top': '20px'}}>
             <div className={clsx(style.wrap_outStadingProduct)}>
@@ -29,62 +30,12 @@ function OutStadingProduct() {
                 </div>
                 <div className={clsx(style.wrap_product)}>
                     <div className='row'>
-                        {products.map((product) => (
+                        {/* {products.map((product) => (
                             <div className={clsx(style.col_product, 'col-2')}>
                                 <Product value={product} />
                             </div>
-                        ))}
-                        {/* <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div>
-                        <div className={clsx(style.col_product, 'col-2')}>
-                            <Product />
-                        </div> */}
+                        ))} */}
+                        <PaginatedItems  itemsPerPage={5} />
                     </div>
                 </div>
             </div>

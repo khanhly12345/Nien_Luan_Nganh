@@ -20,5 +20,9 @@ router.get('/showCategory/:category', ProductController.showLaptop)
 router.get('/detail/:id', ProductController.detail)
 // api cart product
 router.post('/carts', ProductController.carts)
+// api paginated
+router.get('/paginate', ProductController.paginate)
+// api count product
+router.get('/count', ProductController.countProduct)
 
 module.exports = router;

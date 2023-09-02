@@ -40,9 +40,9 @@ function Header() {
                                 </div>
                             </div>
                             <ul className={clsx(style.drop_menu)}>
-                                <li><a href='#'>Sản phẩm Laptop</a></li>
-                                <li><a href='#'>Sản phẩm Điện Thoại</a></li>
-                                <li><a href='#'>Phụ Kiện </a></li>
+                                <li><Link to='/filter/64e025fad4123118d9bb8a8d'>Sản phẩm Laptop</Link></li>
+                                <li><Link to='/filter/64e02616d4123118d9bb8a8e'>Sản phẩm Điện Thoại</Link></li>
+                                <li><Link to='/filter/64e02570d4123118d9bb8a8c'>Phụ Kiện</Link></li>
                             </ul>
                         </div>
                         <div className='col-5'>
