@@ -24,5 +24,7 @@ router.post('/carts', ProductController.carts)
 router.get('/paginate', ProductController.paginate)
 // api count product
 router.get('/count', ProductController.countProduct)
+// api fillter products
+router.post('/filter', ProductController.filter)
 
 module.exports = router;

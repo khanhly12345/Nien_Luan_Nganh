@@ -5,7 +5,7 @@ const Product = new Schema({
     name: String,
     branch: String,
     img: String,
-    price: String,
+    price: Number,
     quantity: String,
     category:{
         type: mongoose.Schema.Types.ObjectId,

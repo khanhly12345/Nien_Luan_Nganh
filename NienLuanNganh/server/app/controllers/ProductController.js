@@ -154,7 +154,6 @@ class Product {
 
     async showLaptop(req, res) {
         const id = req.params.category
-        console.log(id)
         const products = await Products.find()
             .populate({path: 'category', match: {name: `${id}`}}) // 'author' ở đây là tên trường chứa tham chiếu
             .exec();
@@ -205,6 +204,65 @@ class Product {
     async countProduct (req, res) {
         const count = await Products.count({})
         res.json({count})
+    }
+
+    async filter(req, res) {
+        const {category, ram, price, branch} = req.body
+        let newPrice
+
+        const filterConditions = [];
+
+        if (ram !== '') {
+            filterConditions.push({ 'attributes.ram': ram });
+        }
+
+        if (branch !== '') {
+            filterConditions.push({ branch: branch });
+        }
+
+        if(price !== undefined) {
+            if(price == 20000000) {
+                newPrice = {$lt : price}
+                filterConditions.push({ price: newPrice });
+            }else{
+                newPrice = {$gt : price}
+                filterConditions.push({ price: newPrice });
+            }
+        }
+        
+        // if(newPrice !== '') {
+        //     filterConditions.push({ price: newPrice });
+        // }
+
+        console.log(filterConditions)
+        try {
+            const products = await Products.find({ $and: filterConditions })
+                .populate({ path: 'category', match: {name: `${category}`}})
+                .exec()
+            const filterProduct = products.filter(product => (
+                product.category !== null
+            ))
+            res.json(filterProduct)
+        } catch (error) {
+            
+        }
+        
+
+        // try {
+        //     // Bước 1: Tìm sản phẩm theo giá
+        //     const products = await Products.find({ price: { $lt: newPrice } }).exec();
+        
+        //     // Bước 2: Lọc danh sách sản phẩm dựa trên danh mục
+        //     const filteredProducts = products.filter(product => {
+        //       return product.category && product.category.name === category;
+        //     });
+        
+        //     res.json(filteredProducts);
+        //   } catch (error) {
+        //     console.error(error);
+        //     res.status(500).json({ error: 'Lỗi khi lọc sản phẩm' });
+        //   }
+        
     }
 }
 
