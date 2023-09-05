@@ -17,9 +17,9 @@ function Nav() {
                     <li><a><i class="fa fa-users"></i>Customer </a></li>
                     <li><Link to=''><i class="fa fa-laptop"></i>Products</Link></li>
                     <li><Link to='order'><i class="fa fa-cart-plus"></i>Orders</Link></li>
-                    <li><a><i class="fa fa-user"></i>Account </a></li>
+                    <li><Link to='account'><i class="fa fa-user"></i>Account</Link></li>
                     <li><a><i class="fa fa-wrench"></i>Setting </a></li>
-                    <li><a><i class="fa fa-lock"></i>Login </a></li>
+                    <li><a href='/loginadmin'><i class="fa fa-lock"></i>Login </a></li>
                     <li><a><i class="fa fa-user-plus"></i>Register </a></li>
                     <li><a><i class="fa fa-arrow-right"></i>Log out </a></li>
                 </ul>

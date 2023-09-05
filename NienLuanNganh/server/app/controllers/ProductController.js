@@ -154,13 +154,18 @@ class Product {
 
     async showLaptop(req, res) {
         const id = req.params.category
-        const products = await Products.find()
-            .populate({path: 'category', match: {name: `${id}`}}) // 'author' ở đây là tên trường chứa tham chiếu
-            .exec();
-         const filterProduct = products.filter(product => (
-            product.category !== null
-         ))
-         res.json(filterProduct)
+        try {
+            const products = await Products.find()
+                .populate({path: 'category', match: {name: `${id}`}}) // 'author' ở đây là tên trường chứa tham chiếu
+                .exec();
+            const filterProduct = products.filter(product => (
+                product.category !== null
+            ))
+            res.json(filterProduct)
+        } catch (error) {
+            console.log('category', error)
+        }
+        
     }
 
     // detail
@@ -186,7 +191,6 @@ class Product {
 
     async paginate (req, res) {
         const { page, limit } = req.query;
-        console.log(page, limit)
         const currentPage = parseInt(page) + 1 || 0;
         const itemsPerPage = parseInt(limit) || 5;
 
@@ -206,63 +210,61 @@ class Product {
         res.json({count})
     }
 
+    // filter
+
     async filter(req, res) {
         const {category, ram, price, branch} = req.body
         let newPrice
 
         const filterConditions = [];
+        console.log('ram price branch', ram, price, branch)
 
-        if (ram !== '') {
+        if (ram !== '' && ram !== undefined) {
             filterConditions.push({ 'attributes.ram': ram });
         }
 
-        if (branch !== '') {
+        if (branch !== '' && branch !== undefined) {
             filterConditions.push({ branch: branch });
         }
 
-        if(price !== undefined) {
+        if(price !== undefined && price!== '') {
             if(price == 20000000) {
-                newPrice = {$lt : price}
+                newPrice = {$lt : parseInt(price)}
                 filterConditions.push({ price: newPrice });
             }else{
-                newPrice = {$gt : price}
+                newPrice = {$gt :  parseInt(price)}
                 filterConditions.push({ price: newPrice });
             }
         }
-        
-        // if(newPrice !== '') {
-        //     filterConditions.push({ price: newPrice });
-        // }
-
-        console.log(filterConditions)
-        try {
-            const products = await Products.find({ $and: filterConditions })
-                .populate({ path: 'category', match: {name: `${category}`}})
-                .exec()
-            const filterProduct = products.filter(product => (
-                product.category !== null
-            ))
-            res.json(filterProduct)
-        } catch (error) {
+        if (filterConditions.length) {
+            try {
+                const products = await Products.find({ $and: filterConditions })
+                    .populate({ path: 'category', match: { name: `${category}` } })
+                    .exec();
+                
+                // Filter out products with null category
+                const filterProduct = products.filter((product) => product.category !== null);
             
-        }
-        
-
-        // try {
-        //     // Bước 1: Tìm sản phẩm theo giá
-        //     const products = await Products.find({ price: { $lt: newPrice } }).exec();
-        
-        //     // Bước 2: Lọc danh sách sản phẩm dựa trên danh mục
-        //     const filteredProducts = products.filter(product => {
-        //       return product.category && product.category.name === category;
-        //     });
-        
-        //     res.json(filteredProducts);
-        //   } catch (error) {
-        //     console.error(error);
-        //     res.status(500).json({ error: 'Lỗi khi lọc sản phẩm' });
-        //   }
-        
+                res.json(filterProduct);
+            } catch (error) {
+                console.log('filter ', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        } else {
+                // No filter conditions, return all products in the category
+                try {
+                const allProducts = await Products.find()
+                    .populate({ path: 'category', match: { name: `${category}` } })
+                    .exec();
+            
+                const filterProduct = allProducts.filter((product) => product.category !== null);
+            
+                res.json(filterProduct);
+                } catch (error) {
+                    console.log('filter ', error);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                }
+          }
     }
 }
 

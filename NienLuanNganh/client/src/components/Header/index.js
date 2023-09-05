@@ -31,7 +31,7 @@ function Header() {
                     <div className='row'>
                         <div className={clsx(style.logo_catalog,'col-3')}>
                             <div className='d-flex'>
-                                <Link to='/'><img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png' alt=''/></Link>
+                                <a href='/'><img style={{ width: '33px', height: '70%' }} src='http://localhost:3000/img/logo/logo.png' alt=''/></a>
                                 <div className={clsx(style.wrap_dmsp)}>
                                     <div>
                                         <i class="fa fa-bars"></i>

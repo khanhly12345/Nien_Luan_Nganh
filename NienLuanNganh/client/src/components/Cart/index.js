@@ -8,34 +8,24 @@ function Cart() {
     const storedCartItems = JSON.parse(localStorage.getItem('id')) || [];
     const [carts, setCarts] = useState([])
     const [quantities, setQuantities] = useState([])
+    const [count, setCount] = useState('')
+
     useEffect(() => {
-        axios.post('/api/products/carts', storedCartItems)
-            .then((res) => {
-                setCarts(res.data);
-                setQuantities(new Array(res.data.length).fill(1));
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, [])
-
-    // const minuteQuantity = () => {
-
-    // }
+            axios.post('/api/products/carts', storedCartItems)
+                .then((res) => {
+                    setCarts(res.data);
+                    setQuantities(new Array(res.data.length).fill(1));
+                })
+                .catch(error => {
+                    console.log(error)
+                })  
+    }, [count])
 
     const inCreaseQuantity = (index) => {
         const newQuantities = [...quantities]
         newQuantities[index] = newQuantities[index]  + 1
         setQuantities(newQuantities)
     }
-
-    // const deCreaseQuantity = (index) => {
-    //     const newQuantities = [...quantities]
-    //     if(newQuantities[index] > 1) {
-    //          newQuantities[index] = newQuantities[index]  - 1
-    //         setQuantities(newQuantities)
-    //     }
-    // }
 
     const deCreaseQuantity = useCallback((index) => {
         const newQuantities = [...quantities]
@@ -72,10 +62,15 @@ function Cart() {
         }
     }
         
-
-
+    const delelteCart = (e, index) => {
+        e.preventDefault()
+        storedCartItems.splice(index, 1)
+        localStorage.setItem('id', JSON.stringify(storedCartItems));
+        setCount(storedCartItems.length)
+    }
+    console.log(count)
     return (
-        <div className="container" style={{ marginTop: '50px' }}>
+        <div className="container" style={{ marginTop: '50px' }}>   
             <div className='row'>
                 <div className={clsx(style.wrap_cart, 'col-8')}>
                     <div className='row' style={{ padding: '10px 5px', textAlign: 'center', borderBottom: '1px solid rgb(211 214 227)'}}>
@@ -92,55 +87,63 @@ function Cart() {
                             <span style={{ color: 'black' }}>Thành tiền</span>
                         </div>
                     </div>
-                    {carts.map((cart, index) => (
-                        <div className='row' style={{ padding: '10px 5px', textAlign: 'center'}}>
-                            <div className='col-6'>
-                                <div className='row'>
-                                    <div className='col-4'>
-                                        <img src={'/' + cart.img} style={{ width: '100%'}} />
-                                    </div>
-                                    <div className='col-8' style={{ paddingTop: '15px'  }}>
-                                        <span>{cart.name}</span>< br></br><br></br>
-                                        <span>{cart.attributes && cart.attributes.ram}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='col-2' style={{ paddingTop: '15px'  }}>
-                                <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(cart.price)}</span>
-                                <div style={{ 'text-decoration': 'line-through' }}>{HandlePrice(parseInt(cart.price) - parseInt(cart.price) * 0.1)}</div>
-                            </div>
-                            <div className='col-2' style={{ paddingTop: '15px'  }}>
-                                    <div style={{ display: 'flex', 'justify-content': 'space-around', backgroundColor: 'rgb(211 214 227)', height: '40px', borderRadius: '5px'}}>
-                                        <button 
-                                            style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
-                                            onClick={() => {
-                                                deCreaseQuantity(index)
-                                            }}
-                                        >-</button>
-
-                                        <div 
-                                            className='quantity'
-                                            style={{ paddingTop: '10px', color: 'black' }}
-                                            // value={quantities}
-                                            key={index}
-                                        >{quantities[index]}</div>
-
-                                        <button 
-                                            style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
-                                            onClick={() => {
-                                                inCreaseQuantity(index)
-                                            }}
-                                        >+</button>
-                                    </div>
-                            </div>
-                            <div className='col-2' style={{ paddingTop: '15px'  }}>
-                                <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(parseInt(cart.price * quantities[index]))}</span>
-                                <div style={{ paddingTop: '10px' }}>
-                                    <a href=''>Xóa</a>
-                                </div>
-                            </div>
+                    { count === 0
+                    ? 
+                        <div className='empty_cart' style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img src='http://localhost:3000/img/logo/empty_cart.webp' />
                         </div>
-                    ))}
+                    :
+                        carts.map((cart, index) => (
+                            <div className='row' style={{ padding: '10px 5px', textAlign: 'center'}}>
+                                <div className='col-6'>
+                                    <div className='row'>
+                                        <div className='col-4'>
+                                            <img src={'/' + cart.img} style={{ width: '100%'}} />
+                                        </div>
+                                        <div className='col-8' style={{ paddingTop: '15px'  }}>
+                                            <span>{cart.name}</span>< br></br><br></br>
+                                            <span>{cart.attributes && cart.attributes.ram}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                    <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(cart.price)}</span>
+                                    <div style={{ 'text-decoration': 'line-through' }}>{HandlePrice(parseInt(cart.price) - parseInt(cart.price) * 0.1)}</div>
+                                </div>
+                                <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                        <div style={{ display: 'flex', 'justify-content': 'space-around', backgroundColor: 'rgb(211 214 227)', height: '40px', borderRadius: '5px'}}>
+                                            <button 
+                                                style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
+                                                onClick={() => {
+                                                    deCreaseQuantity(index)
+                                                }}
+                                            >-</button>
+
+                                            <div 
+                                                className='quantity'
+                                                style={{ paddingTop: '10px', color: 'black' }}
+                                                // value={quantities}
+                                                key={index}
+                                            >{quantities[index]}</div>
+
+                                            <button 
+                                                style={{ border: 'none' , backgroundColor: 'rgb(211 214 227)'}}
+                                                onClick={() => {
+                                                    inCreaseQuantity(index)
+                                                }}
+                                            >+</button>
+                                        </div>
+                                </div>
+                                <div className='col-2' style={{ paddingTop: '15px'  }}>
+                                    <span style={{ color: 'black', fontWeight: '600' }}>{HandlePrice(parseInt(cart.price * quantities[index]))}</span>
+                                    <div style={{ paddingTop: '10px' }}>
+                                        <a href='' onClick={(e) => {delelteCart(e, index)}}>Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                    
                     <div className='row'>
                         <div className='col-12' style={{ backgroundColor: 'rgb(243, 243, 247)', padding: '20px 20px', borderRadius: '5px' }}>
                             <div style={{ display: 'flex', marginTop: '5px' }}>
