@@ -1,42 +1,59 @@
-import style from './addadmin.module.scss'
+import style from'./editadmin.module.scss'
+import axios from "axios";
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-import axios from 'axios'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from "react-router-dom";
-
-function AddAdmin() {
+function EditAdmin () {
     const [fullname, setFullname] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [newpassword, setNewpassword] = useState('')
     const [role, setRole] = useState('')
     const [phone, setPhone] = useState('')
 
+    const {id} = useParams();
     const navigate = useNavigate()
+
+    useEffect(() => {
+        axios.get(`/api/admin/showEdit/${id}`)
+            .then(res => {
+                setFullname(res.data.fullname)
+                setUsername(res.data.username)
+                setRole(res.data.role)
+                setPhone(res.data.phone)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },[])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('/api/admin/create', {
-            fullname,
-            username,
-            password,
-            role,
-            phone
-        })
-        .then(res => {
-            if(res.data.message) {
-                navigate('/admin/account')
-            }
-        })
-        .catch(error => {
-            console.log('regiser,', error)
-        })
+        axios.post(`/api/admin/edit/${id}`, {
+                fullname,
+                username,
+                password,
+                newpassword,
+                role,
+                phone,
+            })
+                .then(res => {
+                    if(res.data.message) {
+                        navigate('/admin/account')
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
     }
+        
+        
 
     return (
-        <div className="productadmin" onSubmit={(e) => {handleSubmit(e)}}>
-            <div className={clsx(style.login)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <form style={{ width: '40%'}}>
-                    <h1 style={{ fontSize: '60px', marginBottom: '30px', display: 'flex', justifyContent:' center', fontWeight: '600' }}>Register</h1>
+        <div className="productadmin">  
+            <div className={clsx(style.login)} style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '50px' }}>
+                <form style={{ width: '40%'}} onSubmit={(e) => {handleSubmit(e)}}>
+                    <h1 style={{ fontSize: '60px', marginBottom: '30px', display: 'flex', justifyContent:' center', fontWeight: '600' }}>Edit Admin</h1>
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example1">Fullname</label>
@@ -45,12 +62,17 @@ function AddAdmin() {
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example2">Account</label>
-                        <input type="text" id="form1Example12" class="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        <input type="text" id="form1Example12" class="form-control" value={username } onChange={(e) => setUsername(e.target.value)}/>
                     </div>
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example3">Password</label>
                         <input type="password" id="form1Example3" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    </div> 
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example3">New Password</label>
+                        <input type="password" id="form1Example3" class="form-control" value={newpassword} onChange={(e) => setNewpassword(e.target.value)}/>
                     </div> 
                     
                     <div class="form-outline mb-4">
@@ -70,4 +92,4 @@ function AddAdmin() {
     )
 }
 
-export default AddAdmin;
+export default EditAdmin;

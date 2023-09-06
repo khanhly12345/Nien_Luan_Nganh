@@ -18,7 +18,7 @@ function ProductAdmin() {
             .catch(error => {
                 console.log("error product", error)
             })
-    })
+    }, [])
 
     const handleDelete = (id, img) => {
         axios.post('/api/products/delete', {
@@ -26,12 +26,13 @@ function ProductAdmin() {
             img
         })
         .then((res) => {
-
+            setPrducts(preProduct => preProduct.filter(product => product._id !== id))
         })
         .catch((error) => {
             console.log(error)
         })
     }
+
     return (
         <div className={clsx(style.productadmin)} style={{ height: '700px', overflow: 'scroll'  }}>
             <div className='d-flex' style={{ 'justify-content': 'space-between', padding: '10px' }}>

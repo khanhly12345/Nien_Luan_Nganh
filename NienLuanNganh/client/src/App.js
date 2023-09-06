@@ -40,7 +40,7 @@ import Filter from './components/Filter';
 import LoginAdmin from './components/Admin/LoginAdmin';
 import Account from './components/Admin/Account';
 import AddAdmin from './components/Admin/Account/AddAdmin/addadmin';
-
+import EditAdmin from './components/Admin/Account/EditAdmin';
 function App() {
   return (
     <>
@@ -65,6 +65,7 @@ function App() {
           <Route path='detailOrder/:id' element={<DetailOrder />}/>
           <Route path='account' element={<Account />}/>
           <Route path='addAdmin' element={<AddAdmin />}/>
+          <Route path='editadmin/:id' element={<EditAdmin />}/>
         </Route>
       </Routes>
       <Routes>
