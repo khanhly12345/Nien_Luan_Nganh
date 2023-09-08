@@ -41,6 +41,13 @@ class Users {
             res.json({message: 'Mật khẩu và tài khoản không chính xác!'})
         }
     } 
+
+    show(req, res) {
+        User.find({})
+            .then((user) => {
+                res.json(user)
+            })
+    }
 }
 
 module.exports = new Users()

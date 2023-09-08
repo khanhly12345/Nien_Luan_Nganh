@@ -10,7 +10,7 @@ function Cart() {
     const storedCartItems = JSON.parse(localStorage.getItem('id')) || [];
     const [carts, setCarts] = useState([])
     const [quantities, setQuantities] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState()
     let getCount = document.getElementsByClassName('count_cart')[0]
     useEffect(() => {
             axios.post('/api/products/carts', storedCartItems)

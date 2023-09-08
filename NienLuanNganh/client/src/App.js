@@ -42,6 +42,7 @@ import Account from './components/Admin/Account';
 import AddAdmin from './components/Admin/Account/AddAdmin/addadmin';
 import EditAdmin from './components/Admin/Account/EditAdmin';
 import Overview from './components/Admin/Overview';
+import User from './components/Admin/User';
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
       </Routes>
       <Routes >
         <Route path='/admin' element={<Admin />} >
-          <Route path='' element={<ProductAdmin />} />
+          <Route path='product' element={<ProductAdmin />} />
           <Route path='addProduct' element={<AddProduct />} />
           <Route path='editProduct/:id' element={<EditProduct />} />
           <Route path='order' element={<Order />}/>
@@ -68,7 +69,8 @@ function App() {
           <Route path='account' element={<Account />}/>
           <Route path='addAdmin' element={<AddAdmin />}/>
           <Route path='editadmin/:id' element={<EditAdmin />}/>
-          <Route path='overview' element={<Overview />}/>
+          <Route path='' element={<Overview />}/>
+          <Route path='user' element={<User />}/>
         </Route>
       </Routes>
       <Routes>

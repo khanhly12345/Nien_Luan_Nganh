@@ -56,11 +56,54 @@ class OrderDetail {
     // total order
     async totalorder(req, res) {
         try {
-            const orders = await Order.find({})
-            res.json(orders)
+            const result = await Order.aggregate([
+                {
+                    $group: {
+                        _id: '$user',
+                        totalAmount: { $sum: '$totalAmout' }
+                    }
+                },
+                {
+                    $sort: { totalAmount: -1 }
+                },
+                {
+                    $limit: 5
+                }
+            ])
+            if(result) {
+                res.json(result)
+   
+            }
         } catch (error) {
-            console.log(error)
+            
         }
+    }
+
+    // total user buy items
+    async userByItems (req, res) {
+        try {
+            const result = await Order.aggregate([
+                {
+                    $group: {
+                        _id: '$user',
+                        totalUsers: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { totalUsers: -1 }
+                },
+                {
+                    $limit: 5
+                }
+            ])
+            if(result) {
+                res.json(result)
+            }
+        } catch (error) {
+            
+        }
+        
+        
     }
 }
 

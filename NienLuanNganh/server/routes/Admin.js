@@ -8,4 +8,9 @@ router.get('/showEdit/:id', AdminController.showEdit)
 router.post('/edit/:id', AdminController.edit)
 router.post('/delete', AdminController.delete)
 router.post('/checklogin', AdminController.checklogin)
+// thong ke
+router.get('/countproduct', AdminController.countProduct)
+router.get('/countuser', AdminController.countUser)
+router.get('/countorder', AdminController.countOrder)
+router.get('/revenue', AdminController.revenue)
 module.exports = router

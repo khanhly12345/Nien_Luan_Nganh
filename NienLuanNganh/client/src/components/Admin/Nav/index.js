@@ -12,6 +12,18 @@ function Nav() {
         localStorage.removeItem('admin')
         navigate('/loginadmin')
     }
+    useEffect(() => {
+        const getUl = document.querySelectorAll(".ul li a")
+        console.log(getUl)
+        getUl.forEach((ele) => (
+            ele.addEventListener('click', function() {
+                for(let i=0; i < getUl.length; i++) {
+                    getUl[i].classList.remove('outStading')
+                }
+                ele.classList.add('outStading')
+            })
+        ))
+    })
 
     return (
         <div className={clsx(style.nav)}>
@@ -22,15 +34,14 @@ function Nav() {
                 </div>
             </div>
             <div className={clsx(style.navigation)}>
-                <ul>
-                    <li><a><i class="fa fa-chart-line"></i>Overview </a></li>
-                    <li><a><i class="fa fa-users"></i>Customer </a></li>
-                    <li><Link to=''><i class="fa fa-laptop"></i>Products</Link></li>
+                <ul className='ul'>
+                    <li><Link to='' className='outStading'><i class="fa fa-chart-line"></i>Overview </Link></li>
+                    <li><Link to='user'><i class="fa fa-users"></i>Customer </Link></li>
+                    <li><Link to='product'><i class="fa fa-laptop"></i>Products</Link></li>
                     <li><Link to='order'><i class="fa fa-cart-plus"></i>Orders</Link></li>
                     <li><Link to='account'><i class="fa fa-user"></i>Account</Link></li>
                     <li><a><i class="fa fa-wrench"></i>Setting </a></li>
-                    <li><a href='/loginadmin'><i class="fa fa-lock"></i>Login </a></li>
-                    <li><a><i class="fa fa-user-plus"></i>Register </a></li>
+                    <li><a href='' onClick={(e) => handleDelete(e)}><i class="fa fa-lock"></i>Login </a></li>
                     <li><a href='' onClick={(e) => handleDelete(e)}><i class="fa fa-arrow-right"></i>Log out </a></li>
                 </ul>
             </div>

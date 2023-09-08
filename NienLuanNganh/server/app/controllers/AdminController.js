@@ -1,7 +1,9 @@
 const Admin = require('../models/Admin')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const Product = require('../models/Product')
+const User = require('../models/Users')
+const Order = require('../models/Orders')
 
 class AdminController {
     async create(req, res) {
@@ -90,6 +92,37 @@ class AdminController {
         }else{
             res.json({message: 'Mật khẩu và tài khoản không chính xác!'})
         }
+    }
+
+    countProduct(req, res) {
+        Product.find({})
+            .then((product) => {
+                res.json(product)
+            })
+    }
+
+    countUser(req, res) {
+        User.find({})
+            .then((product) => {
+                res.json(product)
+            })
+    }
+
+    countOrder(req, res) {
+        Order.find({})
+            .then((product) => {
+                res.json(product)
+            })
+    }
+
+    async revenue(req, res) {
+        const orders = await Order.find({})
+        let total = 0;
+        orders.forEach((order) => (
+            total =+ order.totalAmout
+        ))
+
+        res.json(total)
     }
 }
 

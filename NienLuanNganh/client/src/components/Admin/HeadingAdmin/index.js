@@ -3,19 +3,20 @@ import style from './heading.module.scss'
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 
+
+
 function HeadingAdmin () {
     const [storeToken, setStoreToken] = useState('')
-
-    let getToken
+    let getToken = localStorage.getItem('admin')
+    if(!getToken) {
+        window.location.href = '/loginadmin'
+    }
     useEffect(() => {
-        getToken = localStorage.getItem('admin')
-        if(getToken) {
+
             const jwtToken = getToken;
             const decodedToken = jwtDecode(jwtToken);
             setStoreToken(decodedToken)
-        }else{
-            window.location.href = '/loginadmin'
-        }
+
     }, [])
 
     return (
