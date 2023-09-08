@@ -3,6 +3,7 @@ import axios from "axios";
 import clsx from 'clsx';
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from "react-router-dom";
+import jwtDecode from 'jwt-decode';
 function EditAdmin () {
     const [fullname, setFullname] = useState('')
     const [username, setUsername] = useState('')
@@ -10,6 +11,7 @@ function EditAdmin () {
     const [newpassword, setNewpassword] = useState('')
     const [role, setRole] = useState('')
     const [phone, setPhone] = useState('')
+    const [storeToken, setStoreToken] = useState('')
 
     const {id} = useParams();
     const navigate = useNavigate()
@@ -25,6 +27,10 @@ function EditAdmin () {
             .catch(error => {
                 console.log(error)
             })
+        let getToken = localStorage.getItem('admin')
+        let jwtToken = getToken;
+        let decodedToken = jwtDecode(jwtToken);
+        setStoreToken(decodedToken)
     },[])
 
     const handleSubmit = (e) => {
@@ -74,11 +80,12 @@ function EditAdmin () {
                         <label class="form-label" for="form1Example3">New Password</label>
                         <input type="password" id="form1Example3" class="form-control" value={newpassword} onChange={(e) => setNewpassword(e.target.value)}/>
                     </div> 
-                    
+                    {storeToken.role === 1 ?
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example4">Role</label>
                         <input type="text" id="form1Example4" class="form-control" value={role} onChange={(e) => setRole(e.target.value)}/>
-                    </div>
+                    </div> : ' '}
+                    
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example5">Phone</label>

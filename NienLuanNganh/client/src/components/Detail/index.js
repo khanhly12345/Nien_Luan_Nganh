@@ -8,6 +8,8 @@ import PhuKienDetail from './PhuKienDetail';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { HandlePrice } from '../../handlePrice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const responsive = {
     superLargeDesktop: {
@@ -57,12 +59,26 @@ function Detail () {
             })
     }, [id])
 
+    let getCount = document.getElementsByClassName('count_cart')[0]
+    console.log(getCount)
+
     let price = parseInt(detail.price) - parseInt(detail.price) * 0.1
 
 
     const getCart = (id) => {
         if(!cartItems.includes(id)) {
             setCartItems([...cartItems ,id])
+            getCount.innerHTML = [...storedCartItems].length + 1
+            toast.success('thêm vào giỏ hàng thành công', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
 
@@ -161,7 +177,8 @@ function Detail () {
                         ))}
                     </Carousel>
                 </div>
-            </div>
+            </div>            
+            <ToastContainer />
         </div>
         </>
     )

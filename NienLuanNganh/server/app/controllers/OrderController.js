@@ -52,6 +52,16 @@ class OrderDetail {
                 console.log(error)
             })
     }
+
+    // total order
+    async totalorder(req, res) {
+        try {
+            const orders = await Order.find({})
+            res.json(orders)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new OrderDetail();

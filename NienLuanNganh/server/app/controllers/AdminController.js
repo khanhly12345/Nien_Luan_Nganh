@@ -85,7 +85,7 @@ class AdminController {
         const secretKey = 'admin123'
         
         if(passwordMatch) {
-            let token = jwt.sign({adminId: admin._id, username: admin.username}, secretKey, {expiresIn: '1h'} )
+            let token = jwt.sign({adminId: admin._id, username: admin.username, role: admin.role}, secretKey, {expiresIn: '1h'} )
             res.json({token})
         }else{
             res.json({message: 'Mật khẩu và tài khoản không chính xác!'})

@@ -3,13 +3,15 @@ import style from './cart.module.scss'
 import clsx from 'clsx'
 import axios from 'axios';
 import { HandlePrice } from '../../handlePrice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Cart() {
     const storedCartItems = JSON.parse(localStorage.getItem('id')) || [];
     const [carts, setCarts] = useState([])
     const [quantities, setQuantities] = useState([])
-    const [count, setCount] = useState('')
-
+    const [count, setCount] = useState(0)
+    let getCount = document.getElementsByClassName('count_cart')[0]
     useEffect(() => {
             axios.post('/api/products/carts', storedCartItems)
                 .then((res) => {
@@ -44,31 +46,53 @@ function Cart() {
 
     const handleBuy = () => {
         let getToken = localStorage.getItem('token')
-        if(!getToken){
-            window.location.href = '/login'
+        if(carts.length === 0) {
+            window.location.href = '/'
         }else{
-            axios.post('/api/order/create', {   
-                getToken,
-                carts,
-                quantities,
-                totalPrice
-            })
-            .then(res => {
-                console.log(res.data.message)
-            })
-            .catch(errr => {
-                console.log(errr)
-            })
+            if(!getToken){
+                window.location.href = '/login'
+            }else{
+                axios.post('/api/order/create', {   
+                    getToken,
+                    carts,
+                    quantities,
+                    totalPrice
+                })
+                .then(res => {
+                    console.log(res.data.message)
+                    if(res.data.message) {
+                        localStorage.removeItem('id')
+                        setCarts([])
+                        getCount.innerHTML = 0
+                        toast.success('Đặt hàng thành công', {
+                            position: "top-right",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            });
+                    }
+                })
+                .catch(errr => {
+                    console.log(errr)
+                })
+            }
         }
     }
-        
+    
+    let countCart = parseInt([...storedCartItems].length)
+
     const delelteCart = (e, index) => {
         e.preventDefault()
         storedCartItems.splice(index, 1)
         localStorage.setItem('id', JSON.stringify(storedCartItems));
+        getCount.innerHTML =  countCart - 1
         setCount(storedCartItems.length)
     }
-    console.log(count)
+
     return (
         <div className="container" style={{ marginTop: '50px' }}>   
             <div className='row'>
@@ -199,6 +223,7 @@ function Cart() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

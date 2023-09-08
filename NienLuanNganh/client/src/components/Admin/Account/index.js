@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useState, useEffect } from 'react'
-
+import jwtDecode from 'jwt-decode';
 function Account () {
     const [admins, setAdmins] = useState([])
+    const [storeToken, setStoreToken] = useState('')
 
     useEffect(() => {
        axios.get('/api/admin/show')
@@ -13,7 +14,13 @@ function Account () {
             .catch(error => {
                 console.log('api show', error)
             })
+        let getToken = localStorage.getItem('admin')
+        let jwtToken = getToken;
+        let decodedToken = jwtDecode(jwtToken);
+        setStoreToken(decodedToken)
     }, [])
+
+        
 
     const handleDelete = (id) => {
         axios.post('/api/admin/delete', {
@@ -35,7 +42,15 @@ function Account () {
                 <h1>Account</h1>
             </div>
             <div>
-                <Link to='/admin/addAdmin' className='btn btn-primary' style={{ marginLeft: '10px' }}>Add Admin</Link>
+                {
+                storeToken.role === 1
+                
+                ? 
+                    <Link to='/admin/addAdmin' className='btn btn-primary' style={{ marginLeft: '10px' }}>Add Admin</Link> 
+                :  
+                    <button disabled className='btn btn-primary'>Add Admin</button>
+                }    
+                    
             </div>
             <div style={{ padding: '10px' }}>
                 <table class="table">
@@ -56,9 +71,15 @@ function Account () {
                                     <td>{index + 1}</td>
                                     <td>{admin.fullname}</td>
                                     <td>{admin.username}</td>
-                                    <td>{admin.role}</td>
+                                    <td>{admin.role === 1 ? 'Quản Lí' : 'Nhân Viên'}</td>
                                     <td>{admin.phone}</td>
-                                    <td><td><Link to={`/admin/editadmin/`+ admin._id} class="btn btn-success">Edit</Link> <button  class="btn btn-danger" onClick={() => {handleDelete(admin._id)}}>Delete</button></td></td>
+                                    <td>
+                                        <td>
+                                            <Link to={`/admin/editadmin/`+ admin._id} class="btn btn-success">Edit</Link> 
+                                            {storeToken.role === 1 ? <button  class="btn btn-danger" onClick={() => {handleDelete(admin._id)}}>Delete</button> : <button disabled class="btn btn-danger">Delete</button>}
+                                            
+                                        </td>
+                                    </td>
                                 </tr>
                             ))}
                         

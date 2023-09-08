@@ -41,6 +41,8 @@ import LoginAdmin from './components/Admin/LoginAdmin';
 import Account from './components/Admin/Account';
 import AddAdmin from './components/Admin/Account/AddAdmin/addadmin';
 import EditAdmin from './components/Admin/Account/EditAdmin';
+import Overview from './components/Admin/Overview';
+
 function App() {
   return (
     <>
@@ -66,6 +68,7 @@ function App() {
           <Route path='account' element={<Account />}/>
           <Route path='addAdmin' element={<AddAdmin />}/>
           <Route path='editadmin/:id' element={<EditAdmin />}/>
+          <Route path='overview' element={<Overview />}/>
         </Route>
       </Routes>
       <Routes>

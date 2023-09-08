@@ -6,16 +6,20 @@ import jwtDecode from 'jwt-decode';
 
 function Header() {
     const [storeToken, setStoreToken] = useState('')
+    const [items, setItems] = useState([])
     let getToken
+    let getItem 
     useEffect(() => {
         getToken = localStorage.getItem('token')
+        getItem = JSON.parse(localStorage.getItem('id'))
+        setItems(getItem)
         if(getToken) {
             const jwtToken = getToken;
             const decodedToken = jwtDecode(jwtToken);
             setStoreToken(decodedToken)
         }
     }, [])
-
+    console.log(items)
     const handleLogout = () => {
         localStorage.removeItem('token')
         window.location.href = '/'
@@ -94,7 +98,7 @@ function Header() {
                                     <div className={clsx(style.sub_user)}>
                                         <i class="fa fa-cart-plus"></i>
                                     </div>  
-                                    <div className={clsx(style.user_signin)}>Giỏ hàng của bạn<br></br> <span>(1) sản phấm</span></div>
+                                    <div className={clsx(style.user_signin)}>Giỏ hàng của bạn<br></br> <span>(<span className='count_cart' style={{ color: 'red' }}>{items !== null ? items.length : '0'}</span>) sản phấm</span></div>
                                 </Link>
                             </div>
                         </div>

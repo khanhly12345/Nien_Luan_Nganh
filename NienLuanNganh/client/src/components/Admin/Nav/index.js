@@ -1,8 +1,18 @@
 import style from './nav.module.scss'
 import clsx from 'clsx'
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Nav() {
+
+    const navigate = useNavigate()
+
+    const handleDelete = (e) => {
+        e.preventDefault()
+        localStorage.removeItem('admin')
+        navigate('/loginadmin')
+    }
+
     return (
         <div className={clsx(style.nav)}>
             <div className='nav_header' style={{ padding: '20px' , borderBottom:'1px solid rgb(47, 55, 70)'}}>
@@ -21,7 +31,7 @@ function Nav() {
                     <li><a><i class="fa fa-wrench"></i>Setting </a></li>
                     <li><a href='/loginadmin'><i class="fa fa-lock"></i>Login </a></li>
                     <li><a><i class="fa fa-user-plus"></i>Register </a></li>
-                    <li><a><i class="fa fa-arrow-right"></i>Log out </a></li>
+                    <li><a href='' onClick={(e) => handleDelete(e)}><i class="fa fa-arrow-right"></i>Log out </a></li>
                 </ul>
             </div>
             <div>
