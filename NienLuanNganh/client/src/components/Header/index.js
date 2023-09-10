@@ -3,10 +3,14 @@ import style from './header.module.scss'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
+import io from 'socket.io-client'
+const socket = io("http://localhost:3001")
 
 function Header() {
     const [storeToken, setStoreToken] = useState('')
     const [items, setItems] = useState([])
+    // const [notifications, setNotifications] = useState([])
+    const [initNotifications, setInitNotifications] = useState([])
     let getToken
     let getItem 
     useEffect(() => {
@@ -19,11 +23,50 @@ function Header() {
             setStoreToken(decodedToken)
         }
     }, [])
-    console.log(items)
+
     const handleLogout = () => {
         localStorage.removeItem('token')
         window.location.href = '/'
     }
+
+    useEffect(() => {
+        let getToken2 = localStorage.getItem('token')
+
+        if(getToken2) {        
+            const decodedToken = jwtDecode(getToken2);
+            socket.emit('getNotifications', (decodedToken.userId))
+            socket.on('notifications', getNotification => {
+                setInitNotifications(getNotification)
+            })
+        }
+        // socket.on('notifications', (notification) => {
+        //     setNotifications([notification]);
+        // });
+        return () => {
+            // Ngừng lắng nghe khi component bị unmounted
+            socket.off('notifications'); 
+        };
+    }, [])
+    
+    console.log(initNotifications)
+
+    const handleNoti = (id) => {
+        let getToken3 = localStorage.getItem('token')
+        let getIdToken
+        if(getToken3) {        
+            const decodedToken2 = jwtDecode(getToken3);
+            getIdToken = decodedToken2.userId
+            console.log(getIdToken)
+            socket.emit('setStatus', ({id, getIdToken}))
+            socket.on('status', (getNotification) => {
+                console.log(getNotification)
+                setInitNotifications(getNotification)
+            })
+        }
+
+    }
+
+    const getNotiRead = initNotifications.filter(initNotification => initNotification.status === 'unread')
 
     return(
         <div className={ clsx(style.header) }>
@@ -82,9 +125,29 @@ function Header() {
                                 
                                 
                             </div>
-                            <div className='notification'>
+                            <div className={clsx(style.notification)}>
                                 <div className={clsx(style.sub_user, style.notifi)}>
                                     <i class="fa fa-bell"></i>
+                                    <span className={clsx(style.countNoti)}>{getNotiRead.length}</span>
+                                </div>
+                                <div className={clsx(style.noti2)}>
+                                    <div className={clsx(style.sub_noti)}>
+                                        <ul>
+                                            {initNotifications.map((initNotification, index) => (
+                                                <>
+                                                    <li 
+                                                        key={index}
+                                                        style={{ background: initNotification.status === 'unread' ? 'rgb(238, 226, 226)' : 'white'  }}
+                                                        onClick={() => {handleNoti(initNotification._id)}}
+                                                    >
+                                                        {initNotification.message + ' đơn hàng ' + initNotification._id}
+                                                        <br></br> <span>{initNotification.createdAt}</span>
+                                                    </li>
+                                                </>
+                                            ))}
+                                            
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div className={clsx(style.cart)}>

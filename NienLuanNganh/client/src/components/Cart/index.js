@@ -5,6 +5,10 @@ import axios from 'axios';
 import { HandlePrice } from '../../handlePrice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import io from 'socket.io-client'
+import jwtDecode from 'jwt-decode';
+
+const socket = io("http://localhost:3001")
 
 function Cart() {
     const storedCartItems = JSON.parse(localStorage.getItem('id')) || [];
@@ -46,12 +50,16 @@ function Cart() {
 
     const handleBuy = () => {
         let getToken = localStorage.getItem('token')
+        
         if(carts.length === 0) {
             window.location.href = '/'
         }else{
             if(!getToken){
                 window.location.href = '/login'
             }else{
+                const jwtToken = getToken;
+                const decodedToken = jwtDecode(jwtToken);
+                socket.emit('purchase', ({userId: decodedToken.userId, message: 'Bạn đã đặt hàng thành công'}))
                 axios.post('/api/order/create', {   
                     getToken,
                     carts,
