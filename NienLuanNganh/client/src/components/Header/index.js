@@ -11,6 +11,7 @@ function Header() {
     const [items, setItems] = useState([])
     // const [notifications, setNotifications] = useState([])
     const [initNotifications, setInitNotifications] = useState([])
+    const [search, setSearch] = useState('')
     let getToken
     let getItem 
     useEffect(() => {
@@ -94,8 +95,8 @@ function Header() {
                         </div>
                         <div className='col-5'>
                             <div className={clsx(style.search)}>
-                                <input type='text' placeholder="Tìm kiếm" />
-                                <i class="fas fa-search"></i>
+                                <input type='text' placeholder="Tìm kiếm" value={search} onChange={(e) => {setSearch(e.target.value)}}/>
+                                <Link to={'/search/'+ search}><i class="fas fa-search"></i> </Link>
                             </div>
                         </div>
                         <div className='col-4 d-flex'>

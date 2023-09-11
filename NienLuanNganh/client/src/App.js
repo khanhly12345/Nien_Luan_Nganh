@@ -43,7 +43,7 @@ import AddAdmin from './components/Admin/Account/AddAdmin/addadmin';
 import EditAdmin from './components/Admin/Account/EditAdmin';
 import Overview from './components/Admin/Overview';
 import User from './components/Admin/User';
-
+import Search from './components/Search';
 
 function App() {
   return (
@@ -58,6 +58,7 @@ function App() {
           <Route path='/login' element={<Login />}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/filter/:id' element={<Filter />}/>
+          <Route path='/search/:value' element={<Search />}/>
         </Route>
       </Routes>
       <Routes >

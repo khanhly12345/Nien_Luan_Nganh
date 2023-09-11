@@ -8,8 +8,7 @@ import { HandlePrice } from '../../../handlePrice';
 function ProductAdmin() {
 
     const [products, setPrducts] = useState([])
-
-
+    const [datas, setDatas] = useState([])
     useEffect(() => {
         axios.get('/api/products/show')
             .then((res) => {
@@ -19,6 +18,7 @@ function ProductAdmin() {
                 console.log("error product", error)
             })
     }, [])
+
 
     const handleDelete = (id, img) => {
         axios.post('/api/products/delete', {
@@ -33,13 +33,26 @@ function ProductAdmin() {
         })
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post('/api/products/searchadmin', {
+            datas
+        })
+        .then(res => {
+            setPrducts(res.data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
     return (
         <div className={clsx(style.productadmin)} style={{ height: '700px', overflow: 'scroll'  }}>
             <div className='d-flex' style={{ 'justify-content': 'space-between', padding: '10px' }}>
                 <h1>Product</h1>
                 <div style={{ paddingTop: '10px' }}>
-                    <form class="form-inline my-2 my-lg-0 d-flex">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <form class="form-inline my-2 my-lg-0 d-flex" onSubmit={(e) => handleSubmit(e)}>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={datas} onChange={(e) => setDatas(e.target.value)}/>
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>

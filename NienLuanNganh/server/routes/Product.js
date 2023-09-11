@@ -26,5 +26,9 @@ router.get('/paginate', ProductController.paginate)
 router.get('/count', ProductController.countProduct)
 // api fillter products
 router.post('/filter', ProductController.filter)
+// search
+router.post('/search', ProductController.search)
+// search
+router.post('/searchadmin', ProductController.searchadmin)
 
 module.exports = router;

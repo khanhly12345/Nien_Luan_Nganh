@@ -266,6 +266,27 @@ class Product {
                 }
           }
     }
+
+    async search (req, res) {
+        try {
+            const {value} = req.body
+            const product = await Products.find({name: { $regex: new RegExp(value, 'i')}})
+            res.json(product)
+        } catch (error) {
+            console.log('search ', error)
+        }
+    }
+
+    async searchadmin(req, res) {
+        try {
+            const {datas} = req.body
+            const product = await Products.find({name: { $regex: new RegExp(datas, 'i')}})
+            res.json(product)
+        } catch (error) {
+            console.log('search ', error)
+        }
+
+    }
 }
 
 module.exports = new Product(); 
