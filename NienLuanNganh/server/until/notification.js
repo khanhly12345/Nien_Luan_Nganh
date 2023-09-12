@@ -1,5 +1,5 @@
 const Notificaitons = require('../app/models/Notifications')
-const jwt = require('jsonwebtoken');
+
 
 
 function Notificaiton(io) {
@@ -20,7 +20,7 @@ function Notificaiton(io) {
 
         socket.on('getNotifications', async (userId) => {
             try {
-                const notifications = await Notificaitons.find({ userId: userId});
+                const notifications = await Notificaitons.find({ userId: userId });
                 socket.emit('notifications', notifications);
             } catch (error) {
                 console.log('thong bao dat hang', error)

@@ -6,6 +6,7 @@ const route = require('./routes')
 const bodyParser = require('body-parser');
 const path = require('path');
 const Notification = require('./until/notification')
+const Comment = require('./until/Comments')
 const http = require('http')
 const server = http.createServer(app)
 const {Server} = require('socket.io')
@@ -27,6 +28,7 @@ const io = new Server(server, {
 })
 
 Notification(io)
+Comment(io)
 
 // router
 route(app);

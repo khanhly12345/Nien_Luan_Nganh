@@ -105,7 +105,7 @@ function Header() {
                                 <div style={{ display: 'flex', position: 'relative' }} className={clsx(style.wrap_infor)}>
                                     <div style={{ display: 'flex', width: '100%'}}>
                                         <img src='http://localhost:3000/img/logo/avatar.jpg' style={{ width: '50px', borderRadius: '50px'}} />
-                                        <div style={{ paddingLeft: '5px' }}>Xin chào, <br></br><span style={{ color: 'red', fontWeight: 550, paddingTop: '10px' }}>{storeToken.username}</span></div>
+                                        <div style={{ paddingLeft: '5px', width: '90px' }}>Xin chào, <br></br><span style={{ color: 'red', fontWeight: 550, paddingTop: '10px' }}>{storeToken.username}</span></div>
                                     </div>
                                     <div className={clsx(style.infor)}>
                                         <div className={clsx(style.sub_infor)}>
